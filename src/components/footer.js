@@ -10,7 +10,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary">
       {"Copyright © "}
       <Link color="inherit" href="https://digitalinnerprize.tech/">
-        Your Website
+        Digital InnerPrize l.l.c
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
