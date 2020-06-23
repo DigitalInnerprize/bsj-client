@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+/**
+ * @returns {JSX.Element}
+ */
 export default function SignUp() {
   const classes = useStyles()
 

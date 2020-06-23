@@ -1,6 +1,8 @@
 import React from "react"
+import { ThemeProvider } from "@material-ui/core/styles"
 import { ViewportProvider } from "./viewport.tsx"
 import { BreakpointProvider } from "./breakpoint.tsx"
+import theme from "../theme"
 
 function ProviderComposer({ contexts, children }) {
   return contexts.reduceRight(
@@ -25,6 +27,7 @@ function ContextProvider({ children }) {
   return (
     <ProviderComposer
       contexts={[
+        <ThemeProvider theme={theme} />,
         <BreakpointProvider queries={queries} />,
         <ViewportProvider />,
       ]}

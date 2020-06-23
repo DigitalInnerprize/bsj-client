@@ -12,12 +12,19 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 
-import Header from "./header"
-import StickyFooter from "./footer"
+import Header from "./header.tsx"
+import StickyFooter from "./footer.tsx"
 
 const useStyles = makeStyles(theme => ({
   root: {
+    display: "flex",
+    flexDirection: "column",
     minHeight: "100vh",
+    position: "relative",
+  },
+  main: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(2),
   },
 }))
 
@@ -35,14 +42,16 @@ const Layout = ({ children }) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <>
       <CssBaseline />
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <Container maxWidth="lg">
-        <main>{children}</main>
-      </Container>
-      <StickyFooter />
-    </div>
+      <div className={classes.root}>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <Container component="main" className={classes.main} maxWidth="lg">
+          {children}
+        </Container>
+        <StickyFooter />
+      </div>
+    </>
   )
 }
 

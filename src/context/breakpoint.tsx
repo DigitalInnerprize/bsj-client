@@ -10,7 +10,7 @@ const BreakpointProvider = ({
 }: {
   children: React.ReactNode
   queries: Record<string, unknown>
-}) => {
+}): JSX.Element => {
   const [queryMatch, setQueryMatch] = useState({})
 
   useEffect(() => {

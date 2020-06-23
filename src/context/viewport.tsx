@@ -1,16 +1,17 @@
 import * as React from "react"
 import { window } from "browser-monads"
+import createCtx from "../utils/createCtx"
 
-type UseViewProps = {
+interface ContextState {
   width: number | null
   height: number | null
 }
 
-const viewportContext = React.createContext({} as UseViewProps)
+export const [useViewportCtx, ViewportCtxProvider] = createCtx<ContextState>()
 
-const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({
+export const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
-}) => {
+}): JSX.Element => {
   // This is the exact same logic that we previously had in our hook
 
   const [width, setWidth] = React.useState(window.innerWidth)
@@ -30,20 +31,21 @@ const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({
      of returning the width and height we store the values in the
      value of the Provider */
   return (
-    <viewportContext.Provider value={{ width, height }}>
+    <ViewportCtxProvider value={{ width, height }}>
       {children}
-    </viewportContext.Provider>
+    </ViewportCtxProvider>
   )
 }
 
 /* Rewrite the "useViewport" hook to pull the width and height values
    out of the context instead of calculating them itself */
 
-function useViewport() {
+export function useViewport(): {
+  width: number | null
+  height: number | null
+} {
   /* We can use the "useContext" Hook to acccess a context from within
      another Hook, remember, Hooks are composable! */
-  const { width, height } = React.useContext<UseViewProps>(viewportContext)
+  const { width, height } = useViewportCtx()
   return { width, height }
 }
-
-export { useViewport, ViewportProvider }

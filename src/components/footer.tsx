@@ -22,8 +22,6 @@ const useStyles = makeStyles(theme => ({
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: "auto",
-    marginLeft: "auto",
-    marginRight: "auto",
     textAlign: "center",
     backgroundColor:
       theme.palette.type === "light"
@@ -32,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function StickyFooter() {
+export default function StickyFooter(): JSX.Element {
   const classes = useStyles()
 
   return (
@@ -40,7 +38,6 @@ export default function StickyFooter() {
       <CssBaseline />
       <footer className={classes.footer}>
         <Container maxWidth="sm">
-          <Typography variant="body1">Digital InnerPrize l.l.c</Typography>
           <Copyright />
         </Container>
       </footer>
