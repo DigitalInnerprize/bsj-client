@@ -20,8 +20,9 @@
     yarn develop
     ```
 
-## 🎓 Learning Material Ui
+## 🎓 Asset docs
 [![Material Ui](https://material-ui.com)](https://material-ui.com/components/grid/)
+[![Gatsby](https://www.gatsbyjs.org)](https://www.gatsbyjs.org/)
 
 ## 💫 Deployment
 1. **`Netlify`**: Deployment will be handled through netlify and pulled from changes done to master.
