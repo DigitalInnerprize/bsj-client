@@ -2,6 +2,9 @@
   Behind Scene Jobs Mvp
 </h1>
 
+`Design concept`
+
+- https://newbookmodels.com/browse
 
 
 ## 🚀 Quick start
