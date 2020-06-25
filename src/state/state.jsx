@@ -1,7 +1,6 @@
 import React from "react"
 import { ThemeProvider } from "@material-ui/core/styles"
-import { ViewportProvider } from "./viewport.tsx"
-import { BreakpointProvider } from "./breakpoint.tsx"
+import { ViewportProvider, AuthProvider } from "./index"
 import theme from "../theme"
 
 function ProviderComposer({ contexts, children }) {
@@ -14,22 +13,13 @@ function ProviderComposer({ contexts, children }) {
   )
 }
 
-const queries = {
-  mobile: "(max-width: 767px)",
-  maxTablet: "(max-width: 990px)",
-  tablet: "(min-width: 768px)",
-  desktop: "(min-width: 922px)",
-  portrait: "(orientation: portrait)",
-  landscape: "(orientation: landscape)", // we can check orientation also
-}
-
 function ContextProvider({ children }) {
   return (
     <ProviderComposer
       contexts={[
         <ThemeProvider theme={theme} />,
-        <BreakpointProvider queries={queries} />,
         <ViewportProvider />,
+        <AuthProvider />,
       ]}
     >
       {children}

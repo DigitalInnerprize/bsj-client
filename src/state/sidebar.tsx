@@ -8,9 +8,9 @@ interface ContextState {
   ) => (event: React.KeyboardEvent | React.MouseEvent) => void
 }
 
-export const [useSidebarCtx, SidebarCtxProvider] = createCtx<ContextState>()
+const [useSidebarCtx, SidebarCtxProvider] = createCtx<ContextState>()
 
-export function SidebarProvider({
+function SidebarProvider({
   children,
 }: {
   children: React.ReactNode
@@ -27,7 +27,6 @@ export function SidebarProvider({
     ) {
       return
     }
-    console.log("Func hit")
     setDrawerState(open)
   }
 
@@ -37,3 +36,5 @@ export function SidebarProvider({
     </SidebarCtxProvider>
   )
 }
+
+export { useSidebarCtx, SidebarProvider }
