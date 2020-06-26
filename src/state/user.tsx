@@ -12,7 +12,7 @@ const [useAuthCtx, AuthCtxProvider] = createCtx<ContextState>()
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }): JSX.Element => {
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     status: "pending",
     error: null,
     user: null,

@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 import SignUp from "../components/auth/signUp"
 
 import Layout from "../components/layout"

@@ -22,12 +22,24 @@ const useStyles = makeStyles((theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
-    title: {
+    menuButton: {
+      marginRight: theme.spacing(2),
       color: "white",
       textDecoration: "none",
     },
+    titleFont: {
+      fontSize: "1.4rem",
+    },
+    navFont: {
+      fontSize: "0.9rem",
+    },
   })
 )
+
+const navLinks = [
+  { path: "/sign-in", text: "Sign In" },
+  { path: "/sign-up", text: "Sign Up" },
+]
 
 export default function MenuAppBar(): JSX.Element {
   const classes = useStyles()
@@ -37,6 +49,14 @@ export default function MenuAppBar(): JSX.Element {
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open)
+
+  React.useEffect(() => {
+    if (prevOpen.current === true && menu === false) {
+      anchorRef.current!.focus()
+    }
+
+    prevOpen.current = menu
+  }, [menu])
 
   const handleToggle = () => {
     setMenuOpen(prevOpen => !prevOpen)
@@ -53,72 +73,74 @@ export default function MenuAppBar(): JSX.Element {
     setMenuOpen(false)
   }
 
-  function handleListKeyDown(event: React.KeyboardEvent) {
+  const handleListKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Tab") {
       event.preventDefault()
       setMenuOpen(false)
     }
   }
 
-  React.useEffect(() => {
-    if (prevOpen.current === true && menu === false) {
-      anchorRef.current!.focus()
-    }
+  const renderNavLinks = navLinks.map(nav => (
+    <Link key={nav.path} to={nav.path} className={classes.menuButton}>
+      <Typography variant="h6" noWrap className={classes.navFont}>
+        {nav.text}
+      </Typography>
+    </Link>
+  ))
 
-    prevOpen.current = menu
-  }, [menu])
+  const renderUserMenu = (
+    <>
+      <Button
+        ref={anchorRef}
+        aria-controls={menu ? "menu-list-grow" : undefined}
+        aria-haspopup="true"
+        onClick={handleToggle}
+      >
+        <AccountCircle />
+      </Button>
+      <Popper
+        open={menu}
+        anchorEl={anchorRef.current}
+        role={undefined}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin:
+                placement === "bottom" ? "center top" : "center bottom",
+            }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={menu}
+                  id="menu-list-grow"
+                  onKeyDown={handleListKeyDown}
+                >
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </>
+  )
 
   return (
     <AppBar position="static">
       <Toolbar>
         <SideBar />
-        <Link to="/" className={classes.title}>
-          <Typography variant="h6" noWrap>
+        <Link to="/" className={classes.menuButton}>
+          <Typography variant="h1" noWrap className={classes.titleFont}>
             Behind Scene Jobs
           </Typography>
         </Link>
         <div className={classes.grow} />
-        {auth && (
-          <>
-            <Button
-              ref={anchorRef}
-              aria-controls={menu ? "menu-list-grow" : undefined}
-              aria-haspopup="true"
-              onClick={handleToggle}
-            >
-              <AccountCircle />
-            </Button>
-            <Popper
-              open={menu}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom" ? "center top" : "center bottom",
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList
-                        autoFocusItem={menu}
-                        id="menu-list-grow"
-                        onKeyDown={handleListKeyDown}
-                      >
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </>
-        )}
+        {auth ? renderUserMenu : renderNavLinks}
       </Toolbar>
     </AppBar>
   )

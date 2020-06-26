@@ -1,4 +1,4 @@
-import React, { createContext } from "react"
+import React from "react"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
 import GridList from "@material-ui/core/GridList"
@@ -134,7 +134,7 @@ export default function ProfileCard(): JSX.Element {
 
         {profile.projects.map((project, index) => {
           return (
-            <GridListTile key={project.coverImage}>
+            <GridListTile key={index}>
               <img src={project.coverImage} alt={project.title} />
 
               <GridListTileBar
@@ -143,11 +143,6 @@ export default function ProfileCard(): JSX.Element {
                   root: classes.titleBar,
                   title: classes.title,
                 }}
-                // actionIcon={
-                //   <IconButton aria-label={`star ${project.title}`}>
-                //     <StarBorderIcon className={classes.title} />
-                //   </IconButton>
-                // }
               />
             </GridListTile>
           )

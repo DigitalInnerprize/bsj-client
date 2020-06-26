@@ -44,7 +44,7 @@ export default function SideBar(): JSX.Element {
     setToggleSidebar({ ...sidebar, [anchor]: open })
   }
 
-  const list = (anchor: string) => (
+  const list = () => (
     <div
       className={classes.list}
       role="presentation"
