@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: 250,
     },
     image: {
-      width: 64,
-      height: 64,
+      width: 128,
+      // height: 128,
     },
     img: {
       margin: "auto",
@@ -106,12 +106,15 @@ export default function ProfileCard(): JSX.Element {
             <Grid item xs={3} sm container>
               <Grid item xs container direction="column" spacing={1}>
                 <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1">
-                    {profile.name}
-                  </Typography>
-                  <Typography variant="subtitle2" gutterBottom>
-                    {profile.location}
-                  </Typography>
+                  <div>
+                    <Typography gutterBottom variant="subtitle1">
+                      {profile.name}
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom>
+                      {profile.location}
+                    </Typography>
+                  </div>
+
                   <Button
                     color="primary"
                     variant="outlined"
