@@ -17,9 +17,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     error: null,
     user: null,
   })
-  return (
-    <AuthCtxProvider value={{ state, setState }}>{children}</AuthCtxProvider>
-  )
+  return <AuthCtxProvider value={{ ...state }}>{children}</AuthCtxProvider>
 }
 
 function useAuth(): {

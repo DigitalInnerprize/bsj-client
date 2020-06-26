@@ -7,9 +7,9 @@ interface ContextState {
   height: number | null
 }
 
-export const [useViewportCtx, ViewportCtxProvider] = createCtx<ContextState>()
+const [useViewportCtx, ViewportCtxProvider] = createCtx<ContextState>()
 
-export const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({
+const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }): JSX.Element => {
   // This is the exact same logic that we previously had in our hook
@@ -40,7 +40,10 @@ export const ViewportProvider: React.FC<{ children: React.ReactNode }> = ({
 /* Rewrite the "useViewport" hook to pull the width and height values
    out of the context instead of calculating them itself */
 
-export function useViewport(): {
+/**
+ * @returns {Object} {height: number, width: number}
+ */
+function useViewport(): {
   width: number | null
   height: number | null
 } {
@@ -49,3 +52,5 @@ export function useViewport(): {
   const { width, height } = useViewportCtx()
   return { width, height }
 }
+
+export { useViewport, ViewportProvider }
