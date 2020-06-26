@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
         "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
     },
     profileButton: {
-      margin: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
   })
 )
@@ -110,7 +112,12 @@ export default function ProfileCard(): JSX.Element {
                   <Typography variant="subtitle2" gutterBottom>
                     {profile.location}
                   </Typography>
-                  <Button color="primary" variant="outlined" size="small" className={classes.profileButton}>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    size="small"
+                    className={classes.profileButton}
+                  >
                     View
                   </Button>
                   <Button color="secondary" variant="outlined" size="small">
