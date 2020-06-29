@@ -3,6 +3,10 @@ let activeEnv =
   process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
 console.log(`Using environment config: '${activeEnv}'`)
 
+require("dotenv").config({
+  path: `.env.${activeEnv}`,
+})
+
 const siteUrl =
   process.env.URL || process.env.DEPLOY_URL || "https://digitalinnerprize.tech"
 
@@ -232,8 +236,8 @@ module.exports = {
         ],
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
+    // this (optional) plugin enables Progressive Web App + Offline functionality
     `gatsby-plugin-offline`,
   ],
 }

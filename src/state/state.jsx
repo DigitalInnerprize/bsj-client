@@ -1,9 +1,24 @@
 import React from "react"
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  HttpLink,
+} from "@apollo/client"
 import { ThemeProvider } from "@material-ui/core/styles"
 import { ViewportProvider, AuthProvider } from "./index"
+import fetch from "isomorphic-fetch"
 import theme from "../theme"
 
-function ProviderComposer({ contexts, children }) {
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: new HttpLink({
+    fetch,
+    uri: process.env.GATSBY_API_URL,
+  }),
+})
+
+const ProviderComposer = ({ contexts, children }) => {
   return contexts.reduceRight(
     (kids, parent) =>
       React.cloneElement(parent, {
@@ -13,16 +28,16 @@ function ProviderComposer({ contexts, children }) {
   )
 }
 
-function ContextProvider({ children }) {
+const ContextProvider = ({ children }) => {
   return (
     <ProviderComposer
       contexts={[
-        <ThemeProvider theme={theme} />,
+        <ApolloProvider client={client} />,
         <ViewportProvider />,
         <AuthProvider />,
       ]}
     >
-      {children}
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </ProviderComposer>
   )
 }

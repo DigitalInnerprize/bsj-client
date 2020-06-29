@@ -1,14 +1,14 @@
 import React from "react"
-import SignUp from "../components/auth/signUp"
+import Register from "../components/auth/register"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo/seo"
 
-const SignUpPage = () => (
+const RegisterPage = () => (
   <Layout>
     <SEO title="Sign Up" />
-    <SignUp />
+    <Register />
   </Layout>
 )
 
-export default SignUpPage
+export default RegisterPage

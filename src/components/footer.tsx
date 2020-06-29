@@ -9,9 +9,9 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
       {"Copyright © "}
-      <Link color="inherit" href="https://digitalinnerprize.tech/">
+      <a color="inherit" href="https://digitalinnerprize.tech/">
         Digital InnerPrize l.l.c
-      </Link>{" "}
+      </a>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>

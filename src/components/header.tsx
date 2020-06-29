@@ -43,7 +43,7 @@ const navLinks = [
 
 export default function MenuAppBar(): JSX.Element {
   const classes = useStyles()
-  const [auth] = React.useState(false)
+  const [auth] = React.useState(true)
   const [menu, setMenuOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLButtonElement>(null)
 
