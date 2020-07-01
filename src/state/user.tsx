@@ -23,37 +23,57 @@ type Action =
   | { type: "LOGIN"; payload: Record<string, any> }
   | { type: "REGISTER"; payload: Record<string, any> }
   | { type: "ERROR"; payload: Record<string, any> }
+  | { type: "FETCH_USER"; payload: Record<string, any> }
+  | { type: "FETCH_USER_LOCAL" }
   | { type: "LOGOUT" }
 
 const reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case "LOGIN":
+      localStorage.setItem("user", JSON.stringify(action.payload.user))
       return {
         ...state,
         isLoggedIn: true,
         error: null,
-        user: action.payload.user,
+        user: action.payload?.user,
       }
     case "REGISTER":
+      localStorage.setItem("user", JSON.stringify(action.payload.user))
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: true,
         error: null,
-        user: action.payload.user,
+        user: action.payload?.user,
       }
     case "ERROR":
       return {
         ...state,
         isLoggedIn: false,
-        error: action.payload.error,
+        error: action.payload?.error,
         user: null,
       }
     case "LOGOUT":
+      localStorage.clear()
       return {
         ...state,
         isLoggedIn: false,
         error: null,
         user: null,
+      }
+    case "FETCH_USER":
+      return {
+        ...state,
+        isLoggedIn: true,
+        error: null,
+        user: action.payload?.user,
+      }
+    case "FETCH_USER_LOCAL":
+      const user = JSON.parse(localStorage.getItem("user")!)
+      return {
+        ...state,
+        isLoggedIn: true,
+        error: null,
+        user,
       }
     default:
       return state
@@ -70,16 +90,19 @@ const useAuth = () => {
   const { state, dispatch } = React.useContext(AuthCtx)
   const getUserInfo = async () => {
     try {
-      const response = await fetch(`${process.env.GATSBY_AUTH_URL}/api/user/me`)
+      const response = await fetch(
+        `${process.env.GATSBY_AUTH_URL}/api/user/me`,
+        {
+          credentials: "include",
+        }
+      )
       const user = response.json()
-      dispatch({ type: "LOGIN", payload: user })
+      dispatch({ type: "FETCH_USER", payload: user })
     } catch (error) {
       dispatch({ type: "ERROR", payload: error })
     }
   }
   const login = async (data: Auth) => {
-    data.identifier = data.email
-    data.username = data.email
     try {
       const response = await fetch(
         `${process.env.GATSBY_AUTH_URL}/api/auth/local`,
@@ -88,6 +111,7 @@ const useAuth = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(data),
         }
       )
@@ -108,14 +132,13 @@ const useAuth = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(data),
         }
       )
       const user = await response.json()
-      console.log(user)
       dispatch({ type: "REGISTER", payload: user })
     } catch (error) {
-      console.log("error =", error)
       dispatch({ type: "ERROR", payload: error })
     }
   }

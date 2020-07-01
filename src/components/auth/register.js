@@ -1,5 +1,6 @@
 import React from "react"
 import * as yup from "yup"
+import { navigate } from "gatsby"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
@@ -49,6 +50,7 @@ export default function Register() {
   })
   const onSubmit = data => {
     fetchRegisteredUser(data)
+    navigate("/")
   }
 
   return (

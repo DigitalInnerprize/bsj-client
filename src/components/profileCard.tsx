@@ -48,7 +48,23 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function ProfileCard(): JSX.Element {
+interface Profile {
+  name: string
+  location: string
+  profileImage: string
+  projects: Record<string, any>[]
+  links: Record<string, any>
+  userId: string
+}
+
+export default function ProfileCard({
+  name,
+  location,
+  profileImage,
+  projects,
+  links,
+  userId,
+}: Profile): JSX.Element {
   const classes = useStyles()
 
   const profile = {
