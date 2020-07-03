@@ -53,16 +53,21 @@ const schema = yup.object().shape({
   password: yup.string().required(),
 })
 
-export default function Login() {
+export default function Login({ redirect }) {
   const classes = useStyles()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app")
+    }
+  }, [isAuthenticated])
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
   })
 
   const onSubmit = data => {
     login(data)
-    navigate("/")
+    navigate(redirect)
   }
 
   return (

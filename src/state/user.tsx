@@ -12,68 +12,55 @@ interface Auth {
 }
 
 interface AuthState {
-  user?: object | null
-  error?: string | null
+  user?: Record<string, any>
   isLoggedIn?: boolean
+  error?: Record<string, any>
 }
 
-const initialState = {}
+const initialState = {
+  user: {},
+  error: {},
+  isLoggedIn: false,
+}
 type AppState = typeof initialState
 type Action =
   | { type: "LOGIN"; payload: Record<string, any> }
   | { type: "REGISTER"; payload: Record<string, any> }
   | { type: "ERROR"; payload: Record<string, any> }
-  | { type: "FETCH_USER"; payload: Record<string, any> }
-  | { type: "FETCH_USER_LOCAL" }
+  | { type: "FETCH_USER_SUCCESS"; payload: Record<string, any> }
   | { type: "LOGOUT" }
 
 const reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user))
       return {
-        ...state,
         isLoggedIn: true,
-        error: null,
-        user: action.payload?.user,
+        error: {},
+        user: action?.payload,
       }
     case "REGISTER":
-      localStorage.setItem("user", JSON.stringify(action.payload.user))
       return {
-        ...state,
         isLoggedIn: true,
-        error: null,
-        user: action.payload?.user,
+        error: {},
+        user: action?.payload,
       }
     case "ERROR":
       return {
-        ...state,
         isLoggedIn: false,
-        error: action.payload?.error,
-        user: null,
+        error: action?.payload,
+        user: {},
       }
     case "LOGOUT":
-      localStorage.clear()
       return {
-        ...state,
         isLoggedIn: false,
-        error: null,
-        user: null,
+        error: {},
+        user: {},
       }
-    case "FETCH_USER":
+    case "FETCH_USER_SUCCESS":
       return {
-        ...state,
         isLoggedIn: true,
-        error: null,
-        user: action.payload?.user,
-      }
-    case "FETCH_USER_LOCAL":
-      const user = JSON.parse(localStorage.getItem("user")!)
-      return {
-        ...state,
-        isLoggedIn: true,
-        error: null,
-        user,
+        error: {},
+        user: action?.payload,
       }
     default:
       return state
@@ -88,6 +75,11 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 const useAuth = () => {
   const { state, dispatch } = React.useContext(AuthCtx)
+  React.useEffect(() => {
+    getUserInfo()
+  }, [])
+  const isAuthenticated =
+    Object.keys(state?.user).length !== 0 && state?.isLoggedIn
   const getUserInfo = async () => {
     try {
       const response = await fetch(
@@ -96,8 +88,8 @@ const useAuth = () => {
           credentials: "include",
         }
       )
-      const user = response.json()
-      dispatch({ type: "FETCH_USER", payload: user })
+      const user = await response.json()
+      dispatch({ type: "FETCH_USER_SUCCESS", payload: user })
     } catch (error) {
       dispatch({ type: "ERROR", payload: error })
     }
@@ -121,6 +113,7 @@ const useAuth = () => {
       dispatch({ type: "ERROR", payload: error })
     }
   }
+
   const register = async (data: Auth) => {
     data.identifier = data.email
     data.username = data.email
@@ -153,10 +146,10 @@ const useAuth = () => {
   }
 
   return {
-    ...state,
+    state,
+    isAuthenticated,
     login,
     register,
-    getUserInfo,
     logout,
   }
 }

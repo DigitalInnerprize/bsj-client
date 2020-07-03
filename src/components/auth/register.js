@@ -44,13 +44,20 @@ const schema = yup.object().shape({
 
 export default function Register() {
   const classes = useStyles()
-  const { register: fetchRegisteredUser } = useAuth()
+  const { register: fetchRegisteredUser, isAuthenticated } = useAuth()
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
   })
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app")
+    }
+  }, [isAuthenticated])
+
   const onSubmit = data => {
     fetchRegisteredUser(data)
-    navigate("/")
+    navigate("/app")
   }
 
   return (
