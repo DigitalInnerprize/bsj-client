@@ -12,48 +12,55 @@ interface Auth {
 }
 
 interface AuthState {
-  user?: object | null
-  error?: string | null
+  user?: Record<string, any>
   isLoggedIn?: boolean
+  error?: Record<string, any>
 }
 
-const initialState = {}
+const initialState = {
+  user: {},
+  error: {},
+  isLoggedIn: false,
+}
 type AppState = typeof initialState
 type Action =
   | { type: "LOGIN"; payload: Record<string, any> }
   | { type: "REGISTER"; payload: Record<string, any> }
   | { type: "ERROR"; payload: Record<string, any> }
+  | { type: "FETCH_USER_SUCCESS"; payload: Record<string, any> }
   | { type: "LOGOUT" }
 
 const reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case "LOGIN":
       return {
-        ...state,
         isLoggedIn: true,
-        error: null,
-        user: action.payload.user,
+        error: {},
+        user: action?.payload,
       }
     case "REGISTER":
       return {
-        ...state,
-        isLoggedIn: false,
-        error: null,
-        user: action.payload.user,
+        isLoggedIn: true,
+        error: {},
+        user: action?.payload,
       }
     case "ERROR":
       return {
-        ...state,
         isLoggedIn: false,
-        error: action.payload.error,
-        user: null,
+        error: action?.payload,
+        user: {},
       }
     case "LOGOUT":
       return {
-        ...state,
         isLoggedIn: false,
-        error: null,
-        user: null,
+        error: {},
+        user: {},
+      }
+    case "FETCH_USER_SUCCESS":
+      return {
+        isLoggedIn: true,
+        error: {},
+        user: action?.payload,
       }
     default:
       return state
@@ -68,18 +75,26 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 const useAuth = () => {
   const { state, dispatch } = React.useContext(AuthCtx)
+  React.useEffect(() => {
+    getUserInfo()
+  }, [])
+  const isAuthenticated =
+    Object.keys(state?.user).length !== 0 && state?.isLoggedIn
   const getUserInfo = async () => {
     try {
-      const response = await fetch(`${process.env.GATSBY_AUTH_URL}/api/user/me`)
-      const user = response.json()
-      dispatch({ type: "LOGIN", payload: user })
+      const response = await fetch(
+        `${process.env.GATSBY_AUTH_URL}/api/user/me`,
+        {
+          credentials: "include",
+        }
+      )
+      const user = await response.json()
+      dispatch({ type: "FETCH_USER_SUCCESS", payload: user })
     } catch (error) {
       dispatch({ type: "ERROR", payload: error })
     }
   }
   const login = async (data: Auth) => {
-    data.identifier = data.email
-    data.username = data.email
     try {
       const response = await fetch(
         `${process.env.GATSBY_AUTH_URL}/api/auth/local`,
@@ -88,6 +103,7 @@ const useAuth = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(data),
         }
       )
@@ -97,6 +113,7 @@ const useAuth = () => {
       dispatch({ type: "ERROR", payload: error })
     }
   }
+
   const register = async (data: Auth) => {
     data.identifier = data.email
     data.username = data.email
@@ -108,14 +125,13 @@ const useAuth = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify(data),
         }
       )
       const user = await response.json()
-      console.log(user)
       dispatch({ type: "REGISTER", payload: user })
     } catch (error) {
-      console.log("error =", error)
       dispatch({ type: "ERROR", payload: error })
     }
   }
@@ -130,10 +146,10 @@ const useAuth = () => {
   }
 
   return {
-    ...state,
+    state,
+    isAuthenticated,
     login,
     register,
-    getUserInfo,
     logout,
   }
 }

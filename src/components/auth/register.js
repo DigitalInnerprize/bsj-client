@@ -1,5 +1,6 @@
 import React from "react"
 import * as yup from "yup"
+import { navigate } from "gatsby"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
@@ -43,12 +44,20 @@ const schema = yup.object().shape({
 
 export default function Register() {
   const classes = useStyles()
-  const { register: fetchRegisteredUser } = useAuth()
+  const { register: fetchRegisteredUser, isAuthenticated } = useAuth()
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
   })
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app")
+    }
+  }, [isAuthenticated])
+
   const onSubmit = data => {
     fetchRegisteredUser(data)
+    navigate("/app")
   }
 
   return (

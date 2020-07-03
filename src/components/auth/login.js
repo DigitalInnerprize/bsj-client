@@ -1,4 +1,6 @@
 import React from "react"
+import * as yup from "yup"
+import { navigate } from "gatsby"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
@@ -46,14 +48,26 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function Login() {
+const schema = yup.object().shape({
+  identifier: yup.string().email().required(),
+  password: yup.string().required(),
+})
+
+export default function Login({ redirect }) {
   const classes = useStyles()
-  const { login } = useAuth()
+  const { login, isAuthenticated } = useAuth()
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app")
+    }
+  }, [isAuthenticated])
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
   })
+
   const onSubmit = data => {
     login(data)
+    navigate(redirect)
   }
 
   return (
@@ -76,8 +90,7 @@ export default function Login() {
               id="identifier"
               label="Email Address"
               name="identifier"
-              autoComplete="email"
-              ref={register}
+              inputRef={register}
             />
             <TextField
               variant="outlined"
@@ -89,7 +102,7 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
-              ref={register}
+              inputRef={register}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

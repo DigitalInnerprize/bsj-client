@@ -44,7 +44,7 @@ export default function SideBar(): JSX.Element {
     setToggleSidebar({ ...sidebar, [anchor]: open })
   }
 
-  const list = () => (
+  const list = (
     <div
       className={classes.list}
       role="presentation"
@@ -52,7 +52,7 @@ export default function SideBar(): JSX.Element {
       onKeyDown={toggleDrawer("left", false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Jobs", "Blog", "Courses"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -71,7 +71,7 @@ export default function SideBar(): JSX.Element {
         open={sidebar["left"]}
         onClose={toggleDrawer("left", false)}
       >
-        {list("left")}
+        {list}
       </Drawer>
       <Button onClick={toggleDrawer("left", true)}>
         <MenuIcon />

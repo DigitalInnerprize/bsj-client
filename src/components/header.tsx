@@ -16,6 +16,7 @@ import {
 
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import SideBar from "./sidebar"
+import { useAuth } from "../state"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,13 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 const navLinks = [
-  { path: "/sign-in", text: "Sign In" },
-  { path: "/sign-up", text: "Sign Up" },
+  { path: "/login", text: "Login" },
+  { path: "/register", text: "Register" },
 ]
 
 export default function MenuAppBar(): JSX.Element {
+  const { isAuthenticated } = useAuth()
   const classes = useStyles()
-  const [auth] = React.useState(true)
   const [menu, setMenuOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLButtonElement>(null)
 
@@ -140,7 +141,7 @@ export default function MenuAppBar(): JSX.Element {
           </Typography>
         </Link>
         <div className={classes.grow} />
-        {auth ? renderUserMenu : renderNavLinks}
+        {isAuthenticated ? renderUserMenu : renderNavLinks}
       </Toolbar>
     </AppBar>
   )
