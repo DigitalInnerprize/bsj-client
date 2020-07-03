@@ -1,5 +1,5 @@
-import { createMuiTheme } from "@material-ui/core/styles"
-import { lightBlue, grey } from "@material-ui/core/colors"
+import { createMuiTheme } from '@material-ui/core/styles'
+import { lightBlue, grey } from '@material-ui/core/colors'
 
 const theme = createMuiTheme({
   palette: {
@@ -11,7 +11,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: ["Montserrat", "sans-serif"].join(","),
+    fontFamily: ['Montserrat', 'sans-serif'].join(','),
   },
 })
 

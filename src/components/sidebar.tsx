@@ -1,17 +1,9 @@
-import * as React from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
-import InboxIcon from "@material-ui/icons/MoveToInbox"
-import MailIcon from "@material-ui/icons/Mail"
-import MenuIcon from "@material-ui/icons/Menu"
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Drawer,
-  Theme,
-} from "@material-ui/core"
+import * as React from 'react'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
+import InboxIcon from '@material-ui/icons/MoveToInbox'
+import MailIcon from '@material-ui/icons/Mail'
+import MenuIcon from '@material-ui/icons/Menu'
+import { Button, List, ListItem, ListItemIcon, ListItemText, Drawer, Theme } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
     white: {
       color: theme.palette.primary.textColor,
     },
-  })
+  }),
 )
 
 export default function SideBar(): JSX.Element {
@@ -30,13 +22,10 @@ export default function SideBar(): JSX.Element {
     left: false,
   })
 
-  const toggleDrawer = (anchor: string, open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
+  const toggleDrawer = (anchor: string, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
     ) {
       return
     }
@@ -48,15 +37,13 @@ export default function SideBar(): JSX.Element {
     <div
       className={classes.list}
       role="presentation"
-      onClick={toggleDrawer("left", false)}
-      onKeyDown={toggleDrawer("left", false)}
+      onClick={toggleDrawer('left', false)}
+      onKeyDown={toggleDrawer('left', false)}
     >
       <List>
-        {["Jobs", "Blog", "Courses"].map((text, index) => (
+        {['Jobs', 'Blog', 'Courses'].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -66,14 +53,10 @@ export default function SideBar(): JSX.Element {
 
   return (
     <>
-      <Drawer
-        anchor={"left"}
-        open={sidebar["left"]}
-        onClose={toggleDrawer("left", false)}
-      >
+      <Drawer anchor={'left'} open={sidebar['left']} onClose={toggleDrawer('left', false)}>
         {list}
       </Drawer>
-      <Button onClick={toggleDrawer("left", true)}>
+      <Button onClick={toggleDrawer('left', true)}>
         <MenuIcon />
       </Button>
     </>
