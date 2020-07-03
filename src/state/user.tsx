@@ -1,6 +1,6 @@
-import * as React from "react"
-import { createUseReducerCtx } from "../utils/createCtx"
-import fetch from "isomorphic-fetch"
+import * as React from 'react'
+import { createUseReducerCtx } from '../utils/createCtx'
+import fetch from 'isomorphic-fetch'
 
 interface Auth {
   identifier?: string
@@ -24,39 +24,39 @@ const initialState = {
 }
 type AppState = typeof initialState
 type Action =
-  | { type: "LOGIN"; payload: Record<string, any> }
-  | { type: "REGISTER"; payload: Record<string, any> }
-  | { type: "ERROR"; payload: Record<string, any> }
-  | { type: "FETCH_USER_SUCCESS"; payload: Record<string, any> }
-  | { type: "LOGOUT" }
+  | { type: 'LOGIN'; payload: Record<string, any> }
+  | { type: 'REGISTER'; payload: Record<string, any> }
+  | { type: 'ERROR'; payload: Record<string, any> }
+  | { type: 'FETCH_USER_SUCCESS'; payload: Record<string, any> }
+  | { type: 'LOGOUT' }
 
 const reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
-    case "LOGIN":
+    case 'LOGIN':
       return {
         isLoggedIn: true,
         error: {},
         user: action?.payload,
       }
-    case "REGISTER":
+    case 'REGISTER':
       return {
         isLoggedIn: true,
         error: {},
         user: action?.payload,
       }
-    case "ERROR":
+    case 'ERROR':
       return {
         isLoggedIn: false,
         error: action?.payload,
         user: {},
       }
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         isLoggedIn: false,
         error: {},
         user: {},
       }
-    case "FETCH_USER_SUCCESS":
+    case 'FETCH_USER_SUCCESS':
       return {
         isLoggedIn: true,
         error: {},
@@ -69,48 +69,41 @@ const reducer = (state: AppState, action: Action): AppState => {
 
 const [AuthCtx, AuthCtxProvider] = createUseReducerCtx(reducer, initialState)
 
-const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}): JSX.Element => <AuthCtxProvider>{children}</AuthCtxProvider>
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }): JSX.Element => (
+  <AuthCtxProvider>{children}</AuthCtxProvider>
+)
 
 const useAuth = () => {
   const { state, dispatch } = React.useContext(AuthCtx)
   React.useEffect(() => {
     getUserInfo()
   }, [])
-  const isAuthenticated =
-    Object.keys(state?.user).length !== 0 && state?.isLoggedIn
+  const isAuthenticated = Object.keys(state?.user).length !== 0 && state?.isLoggedIn
   const getUserInfo = async () => {
     try {
-      const response = await fetch(
-        `${process.env.GATSBY_AUTH_URL}/api/user/me`,
-        {
-          credentials: "include",
-        }
-      )
+      const response = await fetch(`${process.env.GATSBY_AUTH_URL}/api/user/me`, {
+        credentials: 'include',
+      })
       const user = await response.json()
-      dispatch({ type: "FETCH_USER_SUCCESS", payload: user })
+      dispatch({ type: 'FETCH_USER_SUCCESS', payload: user })
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error })
+      dispatch({ type: 'ERROR', payload: error })
     }
   }
   const login = async (data: Auth) => {
     try {
-      const response = await fetch(
-        `${process.env.GATSBY_AUTH_URL}/api/auth/local`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        }
-      )
+      const response = await fetch(`${process.env.GATSBY_AUTH_URL}/api/auth/local`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      })
       const user = await response.json()
-      dispatch({ type: "LOGIN", payload: user })
+      dispatch({ type: 'LOGIN', payload: user })
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error })
+      dispatch({ type: 'ERROR', payload: error })
     }
   }
 
@@ -118,30 +111,27 @@ const useAuth = () => {
     data.identifier = data.email
     data.username = data.email
     try {
-      const response = await fetch(
-        `${process.env.GATSBY_AUTH_URL}/api/auth/local/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        }
-      )
+      const response = await fetch(`${process.env.GATSBY_AUTH_URL}/api/auth/local/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      })
       const user = await response.json()
-      dispatch({ type: "REGISTER", payload: user })
+      dispatch({ type: 'REGISTER', payload: user })
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error })
+      dispatch({ type: 'ERROR', payload: error })
     }
   }
 
   const logout = async () => {
     try {
       await fetch(`${process.env.GATSBY_AUTH_URL}/api/user/logout`)
-      dispatch({ type: "LOGOUT" })
+      dispatch({ type: 'LOGOUT' })
     } catch (error) {
-      dispatch({ type: "ERROR", payload: error })
+      dispatch({ type: 'ERROR', payload: error })
     }
   }
 

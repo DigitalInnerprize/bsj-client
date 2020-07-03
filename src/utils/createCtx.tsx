@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react'
 
 /**
  * A helper to create a Context and Provider with no upfront default value, and
@@ -8,8 +8,7 @@ function createCtx<A extends unknown | null>() {
   const ctx = React.createContext<A | undefined>(undefined)
   function useCtx() {
     const c = React.useContext(ctx)
-    if (c === undefined)
-      throw new Error("useCtx must be inside a Provider with a value")
+    if (c === undefined) throw new Error('useCtx must be inside a Provider with a value')
     return c
   }
   return [useCtx, ctx.Provider] as const // 'as const' makes TypeScript infer a tuple
@@ -17,7 +16,7 @@ function createCtx<A extends unknown | null>() {
 
 function createUseReducerCtx<StateType, ActionType>(
   reducer: React.Reducer<StateType, ActionType>,
-  initialState: StateType
+  initialState: StateType,
 ) {
   const defaultDispatch: React.Dispatch<ActionType> = () => initialState // we never actually use this
   const ctx = React.createContext({
@@ -25,9 +24,7 @@ function createUseReducerCtx<StateType, ActionType>(
     dispatch: defaultDispatch, // just to mock out the dispatch type and make it not optioanl
   })
   function Provider(props: React.PropsWithChildren<Record<string, unknown>>) {
-    const [state, dispatch] = React.useReducer<
-      React.Reducer<StateType, ActionType>
-    >(reducer, initialState)
+    const [state, dispatch] = React.useReducer<React.Reducer<StateType, ActionType>>(reducer, initialState)
     return <ctx.Provider value={{ state, dispatch }} {...props} />
   }
   return [ctx, Provider] as const

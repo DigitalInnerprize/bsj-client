@@ -5,11 +5,11 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
-import Helmet from "react-helmet"
-import SchemaOrg from "./schemaOrg"
-import { useStaticQuery, graphql } from "gatsby"
+import React from 'react'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
+import SchemaOrg from './schemaOrg'
+import { useStaticQuery, graphql } from 'gatsby'
 
 function SEO({
   description,
@@ -60,12 +60,11 @@ function SEO({
           }
         }
       }
-    `
+    `,
   )
 
   const metaDescription = description || site.siteMetadata.description
-  const metaImage =
-    image && image.src ? `${site.siteMetadata.siteUrl}${image.src}` : null
+  const metaImage = image && image.src ? `${site.siteMetadata.siteUrl}${image.src}` : null
   const metaUrl = `${site.siteMetadata.siteUrl}${pathname}`
   const organization = site.siteMetadata.organization
   organization.logo = {
@@ -132,58 +131,58 @@ function SEO({
             metaImage
               ? [
                   {
-                    property: "image",
+                    property: 'image',
                     content: metaImage,
                   },
                   {
-                    property: "og:image",
+                    property: 'og:image',
                     content: metaImage,
                   },
                   {
-                    property: "og:image:width",
+                    property: 'og:image:width',
                     content: image.width,
                   },
                   {
-                    property: "og:image:height",
+                    property: 'og:image:height',
                     content: image.height,
                   },
                   {
-                    property: "og:image:alt",
+                    property: 'og:image:alt',
                     content: image.alt,
                   },
                   {
-                    property: "twitter:image",
+                    property: 'twitter:image',
                     content: metaImage,
                   },
                   {
-                    property: "twitter:image:alt",
+                    property: 'twitter:image:alt',
                     content: image.alt,
                   },
                   {
-                    name: "twitter:card",
-                    content: "summary_large_image",
+                    name: 'twitter:card',
+                    content: 'summary_large_image',
                   },
                 ]
               : [
                   {
-                    name: "twitter:card",
-                    content: "summary",
+                    name: 'twitter:card',
+                    content: 'summary',
                   },
-                ]
+                ],
           )
           .concat(
-            metaImage && metaImage.indexOf("https") > -1
+            metaImage && metaImage.indexOf('https') > -1
               ? [
                   {
-                    propery: "twitter:image:secure_url",
+                    propery: 'twitter:image:secure_url',
                     content: metaImage,
                   },
                   {
-                    propery: "og:image:secure_url",
+                    propery: 'og:image:secure_url',
                     content: metaImage,
                   },
                 ]
-              : []
+              : [],
           )
           .concat(
             keywords.length > 0
@@ -191,7 +190,7 @@ function SEO({
                   name: `keywords`,
                   content: keywords.join(`, `),
                 }
-              : []
+              : [],
           )
           .concat(meta)}
       />

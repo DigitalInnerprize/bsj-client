@@ -1,6 +1,6 @@
-import React from "react"
-import { Link } from "gatsby"
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
+import React from 'react'
+import { Link } from 'gatsby'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
   AppBar,
   Toolbar,
@@ -12,11 +12,11 @@ import {
   ClickAwayListener,
   Grow,
   Typography,
-} from "@material-ui/core"
+} from '@material-ui/core'
 
-import AccountCircle from "@material-ui/icons/AccountCircle"
-import SideBar from "./sidebar"
-import { useAuth } from "../state"
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import SideBar from './sidebar'
+import { useAuth } from '../state'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,21 +25,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      color: "white",
-      textDecoration: "none",
+      color: 'white',
+      textDecoration: 'none',
     },
     titleFont: {
-      fontSize: "1.4rem",
+      fontSize: '1.4rem',
     },
     navFont: {
-      fontSize: "0.9rem",
+      fontSize: '0.9rem',
     },
-  })
+  }),
 )
 
 const navLinks = [
-  { path: "/login", text: "Login" },
-  { path: "/register", text: "Register" },
+  { path: '/login', text: 'Login' },
+  { path: '/register', text: 'Register' },
 ]
 
 export default function MenuAppBar(): JSX.Element {
@@ -60,14 +60,11 @@ export default function MenuAppBar(): JSX.Element {
   }, [menu])
 
   const handleToggle = () => {
-    setMenuOpen(prevOpen => !prevOpen)
+    setMenuOpen((prevOpen) => !prevOpen)
   }
 
   const handleClose = (event: React.MouseEvent<EventTarget>) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return
     }
 
@@ -75,13 +72,13 @@ export default function MenuAppBar(): JSX.Element {
   }
 
   const handleListKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Tab") {
+    if (event.key === 'Tab') {
       event.preventDefault()
       setMenuOpen(false)
     }
   }
 
-  const renderNavLinks = navLinks.map(nav => (
+  const renderNavLinks = navLinks.map((nav) => (
     <Link key={nav.path} to={nav.path} className={classes.menuButton}>
       <Typography variant="h6" noWrap className={classes.navFont}>
         {nav.text}
@@ -93,34 +90,23 @@ export default function MenuAppBar(): JSX.Element {
     <>
       <Button
         ref={anchorRef}
-        aria-controls={menu ? "menu-list-grow" : undefined}
+        aria-controls={menu ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
       >
         <AccountCircle />
       </Button>
-      <Popper
-        open={menu}
-        anchorEl={anchorRef.current}
-        role={undefined}
-        transition
-        disablePortal
-      >
+      <Popper open={menu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom",
+              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  autoFocusItem={menu}
-                  id="menu-list-grow"
-                  onKeyDown={handleListKeyDown}
-                >
+                <MenuList autoFocusItem={menu} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                   <MenuItem onClick={handleClose}>Logout</MenuItem>
                 </MenuList>
               </ClickAwayListener>

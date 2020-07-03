@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react"
+import React, { useState, useEffect, createContext, useContext } from 'react'
 
 const defaultValue = {}
 
@@ -20,9 +20,7 @@ const BreakpointProvider = ({
 
     const handleQueryListener = () => {
       const updatedMatches = keys.reduce((acc, media) => {
-        acc[media] = !!(
-          mediaQueryLists[media] && mediaQueryLists[media].matches
-        )
+        acc[media] = !!(mediaQueryLists[media] && mediaQueryLists[media].matches)
         return acc
       }, {})
       setQueryMatch(updatedMatches)
@@ -30,8 +28,8 @@ const BreakpointProvider = ({
 
     if (window && window.matchMedia) {
       const matches = {}
-      keys.forEach(media => {
-        if (typeof queries[media] === "string") {
+      keys.forEach((media) => {
+        if (typeof queries[media] === 'string') {
           mediaQueryLists[media] = window.matchMedia(queries[media])
           matches[media] = mediaQueryLists[media].matches
         } else {
@@ -40,8 +38,8 @@ const BreakpointProvider = ({
       })
       setQueryMatch(matches)
       isAttached = true
-      keys.forEach(media => {
-        if (typeof queries[media] === "string") {
+      keys.forEach((media) => {
+        if (typeof queries[media] === 'string') {
           mediaQueryLists[media].addListener(handleQueryListener)
         }
       })
@@ -49,8 +47,8 @@ const BreakpointProvider = ({
 
     return () => {
       if (isAttached) {
-        keys.forEach(media => {
-          if (typeof queries[media] === "string") {
+        keys.forEach((media) => {
+          if (typeof queries[media] === 'string') {
             mediaQueryLists[media].removeListener(handleQueryListener)
           }
         })
@@ -58,17 +56,13 @@ const BreakpointProvider = ({
     }
   }, [queries])
 
-  return (
-    <BreakpointContext.Provider value={queryMatch}>
-      {children}
-    </BreakpointContext.Provider>
-  )
+  return <BreakpointContext.Provider value={queryMatch}>{children}</BreakpointContext.Provider>
 }
 
 function useBreakpoint() {
   const context = useContext(BreakpointContext)
   if (context === defaultValue) {
-    throw new Error("useBreakpoint must be used within BreakpointProvider")
+    throw new Error('useBreakpoint must be used within BreakpointProvider')
   }
   return context
 }

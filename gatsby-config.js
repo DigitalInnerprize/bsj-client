@@ -1,14 +1,12 @@
-const { name } = require("./package.json")
-let activeEnv =
-  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
+const { name } = require('./package.json')
+let activeEnv = process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || 'development'
 console.log(`Using environment config: '${activeEnv}'`)
 
-require("dotenv").config({
+require('dotenv').config({
   path: `.env.${activeEnv}`,
 })
 
-const siteUrl =
-  process.env.URL || process.env.DEPLOY_URL || "https://digitalinnerprize.tech"
+const siteUrl = process.env.URL || process.env.DEPLOY_URL || 'https://digitalinnerprize.tech'
 
 module.exports = {
   pathPrefix: process.env.CI ? `/${name}` : `/`,
@@ -16,33 +14,33 @@ module.exports = {
     title: `Behind Scene Jobs`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     siteUrl,
-    author: "Martez Howard",
+    author: 'Martez Howard',
     siteVerification: {
       google: ``,
       bing: ``,
     },
     social: {
       //usernames for SEO
-      twitter: "https://twitter.com/legend_4real",
-      linkedin: "",
+      twitter: 'https://twitter.com/legend_4real',
+      linkedin: '',
     },
     socialLinks: {
       // profile URLS for social links, include https://
-      twitter: "https://twitter.com/legend_4real",
-      github: "https://github.com/digitalinnerprize",
-      linkedin: "",
-      facebook: "",
-      stackOverflow: "",
-      instagram: "",
-      youtube: "",
-      email: "", //include mailto:
-      phone: "", //include tel:
+      twitter: 'https://twitter.com/legend_4real',
+      github: 'https://github.com/digitalinnerprize',
+      linkedin: '',
+      facebook: '',
+      stackOverflow: '',
+      instagram: '',
+      youtube: '',
+      email: '', //include mailto:
+      phone: '', //include tel:
     },
     keywords: [],
     organization: {
       //update with relevant personal data
-      name: "Digital InnerPrize l.l.c",
-      url: "https://digitalinnerprize.tech",
+      name: 'Digital InnerPrize l.l.c',
+      url: 'https://digitalinnerprize.tech',
     },
   },
   plugins: [
@@ -59,11 +57,11 @@ module.exports = {
     `gatsby-plugin-typescript`,
     `gatsby-plugin-netlify`,
     {
-      resolve: "gatsby-plugin-eslint",
+      resolve: 'gatsby-plugin-eslint',
       options: {
         test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
         exclude: /(node_modules|.cache|public)/,
-        stages: ["develop"],
+        stages: ['develop'],
         options: {
           emitWarning: true,
           failOnError: false,
@@ -77,9 +75,9 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-robots-txt",
+      resolve: 'gatsby-plugin-robots-txt',
       options: {
-        policy: [{ userAgent: "*", allow: "/" }],
+        policy: [{ userAgent: '*', allow: '/' }],
       },
     },
     {
@@ -135,7 +133,7 @@ module.exports = {
           {
             // adjust to fit your specific query
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map(edge => {
+              return allMarkdownRemark.edges.map((edge) => {
                 return Object.assign({}, edge.node.frontmatter, {
                   language: `en-us`,
                   title: edge.node.frontmatter.title,
@@ -143,20 +141,13 @@ module.exports = {
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
                   guid: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
-                  author:
-                    edge.node.frontmatter.author.email +
-                    `(` +
-                    edge.node.frontmatter.author.name +
-                    `)`,
+                  author: edge.node.frontmatter.author.email + `(` + edge.node.frontmatter.author.name + `)`,
                   image: {
-                    url:
-                      site.siteMetadata.siteUrl +
-                      edge.node.frontmatter.featured.publicURL,
+                    url: site.siteMetadata.siteUrl + edge.node.frontmatter.featured.publicURL,
                     title: edge.node.frontmatter.featuredAlt,
-                    link:
-                      site.siteMetadata.siteUrl + edge.node.frontmatter.path,
+                    link: site.siteMetadata.siteUrl + edge.node.frontmatter.path,
                   },
-                  custom_elements: [{ "content:encoded": edge.node.html }],
+                  custom_elements: [{ 'content:encoded': edge.node.html }],
                 })
               })
             },
@@ -188,14 +179,14 @@ module.exports = {
               }
             }
             `,
-            output: "/rss.xml",
-            title: "RSS Feed", // update to add your site name + RSS Feed
+            output: '/rss.xml',
+            title: 'RSS Feed', // update to add your site name + RSS Feed
           },
         ],
       },
     },
     {
-      resolve: "gatsby-plugin-react-svg",
+      resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
           include: /\.inline\.svg$/,
@@ -215,21 +206,21 @@ module.exports = {
           },
           `gatsby-remark-copy-linked-files`,
           {
-            resolve: "gatsby-remark-emojis",
+            resolve: 'gatsby-remark-emojis',
             options: {
               // Deactivate the plugin globally (default: true)
               active: true,
               // Add a custom css class
-              class: "emoji-icon",
+              class: 'emoji-icon',
               // Select the size (available size: 16, 24, 32, 64)
               size: 64,
               // Add custom styles
               styles: {
-                display: "inline",
-                margin: "0",
-                position: "relative",
-                top: "2px",
-                width: "19px",
+                display: 'inline',
+                margin: '0',
+                position: 'relative',
+                top: '2px',
+                width: '19px',
               },
             },
           },

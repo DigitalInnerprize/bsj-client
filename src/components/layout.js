@@ -5,22 +5,22 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import { makeStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useStaticQuery, graphql } from 'gatsby'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 
-import Header from "./header.tsx"
-import StickyFooter from "./footer.tsx"
+import Header from './header.tsx'
+import StickyFooter from './footer.tsx'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh",
-    position: "relative",
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    position: 'relative',
   },
   main: {
     marginTop: theme.spacing(8),
