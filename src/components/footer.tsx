@@ -33,6 +33,9 @@ export default function StickyFooter(): JSX.Element {
     <>
       <CssBaseline />
       <footer className={classes.footer}>
+        <div>Resources</div>
+        <div>Connect</div>
+        <div>Misc</div>
         <Container maxWidth="sm">
           <Copyright />
         </Container>

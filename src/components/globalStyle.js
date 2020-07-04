@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components"
-import { fontSizer } from "./styled/mixins/type-utils"
+import { createGlobalStyle } from 'styled-components'
+import { fontSizer } from './styled/mixins/type-utils'
 
 export const GlobalStyle = createGlobalStyle`
 * {
@@ -24,15 +24,10 @@ html {
 
 body {
   height: 100%;
-  font-family: ${props => props.theme.type.family.default}, 'Open Sans';
-  ${props =>
-    fontSizer(
-      props.theme.type.size.body,
-      props.theme.type.multipliers.body,
-      props.theme.breakpoints
-    )}
-  letter-spacing: ${props => props.theme.type.letterSpacing.narrow};
-  line-height: ${props => props.theme.type.lineHeight.regular};
+  font-family: ${(props) => props.theme.type.family.default}, 'Open Sans';
+  ${(props) => fontSizer(props.theme.type.size.body, props.theme.type.multipliers.body, props.theme.breakpoints)}
+  letter-spacing: ${(props) => props.theme.type.letterSpacing.narrow};
+  line-height: ${(props) => props.theme.type.lineHeight.regular};
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
