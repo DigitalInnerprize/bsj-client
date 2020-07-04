@@ -19,11 +19,20 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   footer: {
+    border: '1px solid red',
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
     textAlign: 'center',
     backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
   },
+  columnContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  columns: {
+    width: '20%',
+  }
 }))
 
 export default function StickyFooter(): JSX.Element {
@@ -33,6 +42,11 @@ export default function StickyFooter(): JSX.Element {
     <>
       <CssBaseline />
       <footer className={classes.footer}>
+      <div className={classes.columnContainer}>
+        <div className={classes.columns}><h3>Resources</h3></div>
+        <div className={classes.columns}><h3>Connect</h3></div>
+        <div className={classes.columns}><h3>Misc</h3></div>
+      </div>
         <Container maxWidth="sm">
           <Copyright />
         </Container>
