@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, navigate } from 'gatsby'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
   AppBar,
@@ -32,18 +32,23 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.4rem',
     },
     navFont: {
-      fontSize: '0.9rem',
+      fontSize: '0.98rem',
     },
   }),
 )
 
-const navLinks = [
+const authLinks = [
   { path: '/login', text: 'Login' },
   { path: '/register', text: 'Register' },
 ]
 
+const middleLinks = [
+  { path: '/post-a-job', text: 'Post A Job' },
+  { path: '/jobs', text: 'View Jobs' },
+]
+
 export default function MenuAppBar(): JSX.Element {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, logout } = useAuth()
   const classes = useStyles()
   const [menu, setMenuOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLButtonElement>(null)
@@ -67,8 +72,9 @@ export default function MenuAppBar(): JSX.Element {
     if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return
     }
-
+    logout()
     setMenuOpen(false)
+    navigate('/')
   }
 
   const handleListKeyDown = (event: React.KeyboardEvent) => {
@@ -78,13 +84,14 @@ export default function MenuAppBar(): JSX.Element {
     }
   }
 
-  const renderNavLinks = navLinks.map((nav) => (
-    <Link key={nav.path} to={nav.path} className={classes.menuButton}>
-      <Typography variant="h6" noWrap className={classes.navFont}>
-        {nav.text}
-      </Typography>
-    </Link>
-  ))
+  const renderNavLinks = (navLinks: Record<string, any>[]) =>
+    navLinks.map((nav) => (
+      <Link key={nav.path} to={nav.path} className={classes.menuButton}>
+        <Typography variant="h6" noWrap className={classes.navFont}>
+          {nav.text}
+        </Typography>
+      </Link>
+    ))
 
   const renderUserMenu = (
     <>
@@ -120,14 +127,16 @@ export default function MenuAppBar(): JSX.Element {
   return (
     <AppBar position="static">
       <Toolbar>
-        <SideBar />
+        {isAuthenticated && <SideBar />}
         <Link to="/" className={classes.menuButton}>
           <Typography variant="h1" noWrap className={classes.titleFont}>
             Behind Scene Jobs
           </Typography>
         </Link>
         <div className={classes.grow} />
-        {isAuthenticated ? renderUserMenu : renderNavLinks}
+        {!isAuthenticated && renderNavLinks(middleLinks)}
+        <div className={classes.grow} />
+        {isAuthenticated ? renderUserMenu : renderNavLinks(authLinks)}
       </Toolbar>
     </AppBar>
   )

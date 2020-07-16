@@ -28,7 +28,7 @@ type Action =
   | { type: 'REGISTER'; payload: Record<string, any> }
   | { type: 'ERROR'; payload: Record<string, any> }
   | { type: 'FETCH_USER_SUCCESS'; payload: Record<string, any> }
-  | { type: 'LOGOUT' }
+  | { type: 'LOGOUT'; payload: Record<string, any> | {} }
 
 const reducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
@@ -54,7 +54,7 @@ const reducer = (state: AppState, action: Action): AppState => {
       return {
         isLoggedIn: false,
         error: {},
-        user: {},
+        user: action?.payload,
       }
     case 'FETCH_USER_SUCCESS':
       return {
@@ -128,8 +128,9 @@ const useAuth = () => {
 
   const logout = async () => {
     try {
-      await fetch(`${process.env.GATSBY_AUTH_URL}/api/user/logout`)
-      dispatch({ type: 'LOGOUT' })
+      const response = await fetch(`${process.env.GATSBY_AUTH_URL}/api/user/logout`)
+      const user = await response.json()
+      dispatch({ type: 'LOGOUT', payload: user.status === 200 && {} })
     } catch (error) {
       dispatch({ type: 'ERROR', payload: error })
     }
