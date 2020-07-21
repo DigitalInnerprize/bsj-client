@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   columns: {
     width: '20%',
   },
+  links: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   link: {
     textDecoration: 'none',
     color: 'inherit',
@@ -49,12 +53,24 @@ export default function StickyFooter(): JSX.Element {
         <div className={classes.columnContainer}>
           <div className={classes.columns}>
             <h3>Resources</h3>
+            <div className={classes.links}>
+              <a className={classes.link} href="#">FAQs</a>
+              <a className={classes.link} href="#">Blog</a>
+            </div>
           </div>
           <div className={classes.columns}>
             <h3>Connect</h3>
+            <div className={classes.links}>
+              <a className={classes.link} href="#">Instagram</a>
+              <a className={classes.link} href="#">Email</a>
+            </div>
           </div>
           <div className={classes.columns}>
             <h3>Misc</h3>
+            <div className={classes.links}>
+              <a className={classes.link} href="#">Terms & Conditions</a>
+              <a className={classes.link} href="#">Privacy Policy</a>
+            </div>
           </div>
         </div>
         <Container maxWidth="sm">
