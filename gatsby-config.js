@@ -45,14 +45,6 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-material-ui`,
-      options: {
-        stylesProvider: {
-          injectFirst: true,
-        },
-      },
-    },
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-typescript`,
     `gatsby-plugin-netlify`,
@@ -110,7 +102,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: ``, // set up your own analytics account for this site and insert id here
+        trackingId: process.env.GA_ID, // set up your own analytics account for this site and insert id here
       },
     },
     {

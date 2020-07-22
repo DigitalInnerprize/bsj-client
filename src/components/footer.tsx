@@ -1,66 +1,50 @@
 import React from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
+import styled from 'styled-components'
+import { useBreakpoint } from '../state/breakpoint'
+import { Flex, FlexItem } from './styled/flexBox'
+import { UL, LI } from './styled/list'
+import { P, NavClickLink } from './styled/type'
 
-const useStyles = makeStyles((theme) => ({
-  footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: 'auto',
-    textAlign: 'center',
-    backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
-  },
-  columnContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  columns: {
-    width: '20%',
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-}))
+const Wrapper = styled.footer`
+  height: 10rem;
+  background: ${(props) => props.theme.colors['lightBlue']};
+  color: #f8f8fb;
+  display: grid;
+  place-items: center;
+`
 
-function Copyright() {
-  const { link } = useStyles()
+const Footer = () => {
+  const d = new Date()
+  const year = d.getFullYear()
+  const breakpoint = useBreakpoint()
+
   return (
-    <Typography variant="body2" color="textSecondary">
-      {'Copyright © '}
-      <a className={link} href="https://digitalinnerprize.tech/">
-        Digital InnerPrize l.l.c
-      </a>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <Wrapper>
+      <>
+        <Flex column spaceEvenly>
+          <FlexItem>
+            <UL center>
+              <LI>
+                <NavClickLink marginBottom="sm2" href="#">
+                  facebook
+                </NavClickLink>
+              </LI>
+              <LI>
+                <NavClickLink marginBottom="sm2" href="#">
+                  instagram
+                </NavClickLink>
+              </LI>
+            </UL>
+          </FlexItem>
+          <FlexItem>
+            <P size="sm" marginBottom={breakpoint.tablet && '0'}>
+              Copyright &copy; {year} Digital Innerprize llc. All rights reserved.
+            </P>
+          </FlexItem>
+        </Flex>
+      </>
+    </Wrapper>
   )
 }
 
-export default function StickyFooter(): JSX.Element {
-  const classes = useStyles()
-
-  return (
-    <>
-      <CssBaseline />
-      <footer className={classes.footer}>
-        <div className={classes.columnContainer}>
-          <div className={classes.columns}>
-            <h3>Resources</h3>
-          </div>
-          <div className={classes.columns}>
-            <h3>Connect</h3>
-          </div>
-          <div className={classes.columns}>
-            <h3>Misc</h3>
-          </div>
-        </div>
-        <Container maxWidth="sm">
-          <Copyright />
-        </Container>
-      </footer>
-    </>
-  )
-}
+export default Footer

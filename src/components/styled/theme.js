@@ -1,4 +1,4 @@
-import { TRANSITION } from './constants/general.js'
+import { TRANSITION } from '../../constants/general.js'
 const { LG_DURATION, SM_DURATION, MD_DURATION } = TRANSITION
 
 const theme = {

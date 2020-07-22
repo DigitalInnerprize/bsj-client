@@ -6,7 +6,7 @@ const BreakpointContext = createContext(defaultValue)
 
 const BreakpointProvider = ({
   children,
-  queries,
+  queries = {},
 }: {
   children: React.ReactNode
   queries: Record<string, unknown>

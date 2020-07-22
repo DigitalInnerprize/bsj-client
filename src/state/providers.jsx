@@ -1,33 +1,16 @@
 import React from 'react'
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
-import { setContext } from '@apollo/link-context'
-import Cookies from 'js-cookie'
-import { ThemeProvider } from '@material-ui/core/styles'
-import { ViewportProvider, AuthProvider } from './index'
+import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client'
+import { ThemeProvider } from 'styled-components'
+import { ViewportProvider, BreakpointProvider } from './index'
 import fetch from 'isomorphic-fetch'
 import theme from '../theme'
 
-const httpLink = createHttpLink({
-  fetch,
-  uri: `${process.env.GATSBY_API_URL}/graphql`,
-})
-
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from cookie storage if it exists
-  const token = Cookies.get('jwt')
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  }
-})
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
-  credentials: 'include',
+  link: new HttpLink({
+    fetch,
+    uri: `${process.env.GATSBY_API_URL}/graphql`,
+  }),
 })
 
 const ProviderComposer = ({ contexts, children }) => {
@@ -41,9 +24,25 @@ const ProviderComposer = ({ contexts, children }) => {
 }
 
 const ContextProvider = ({ children }) => {
+  const queries = {
+    mobile: '(max-width: 767px)',
+    maxTablet: '(max-width: 990px)',
+    tablet: '(min-width: 768px)',
+    desktop: '(min-width: 922px)',
+    portrait: '(orientation: portrait)',
+    landscape: '(orientation: landscape)', // we can check orientation also
+  }
+
   return (
-    <ProviderComposer contexts={[<ApolloProvider client={client} />, <AuthProvider />, <ViewportProvider />]}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <ProviderComposer
+      contexts={[
+        <ApolloProvider client={client} />,
+        <ThemeProvider theme={theme} />,
+        <ViewportProvider />,
+        <BreakpointProvider queries={queries} />,
+      ]}
+    >
+      {children}
     </ProviderComposer>
   )
 }

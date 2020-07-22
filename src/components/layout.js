@@ -8,25 +8,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
+import styled from 'styled-components'
+import Navbar from './styled/navbar/navbar.tsx'
+import Footer from './footer.tsx'
+import { GlobalStyle } from './globalStyle'
 
-import Header from './header.tsx'
-import StickyFooter from './footer.tsx'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    position: 'relative',
-  },
-  main: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2),
-  },
-}))
+const Container = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+`
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -39,19 +30,13 @@ const Layout = ({ children }) => {
     }
   `)
 
-  const classes = useStyles()
-
   return (
-    <>
-      <CssBaseline />
-      <div className={classes.root}>
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <Container component="main" className={classes.main} maxWidth="lg">
-          {children}
-        </Container>
-        <StickyFooter />
-      </div>
-    </>
+    <Container>
+      <GlobalStyle />
+      <Navbar siteTitle={data.site.siteMetadata.title} />
+      <main>{children}</main>
+      <Footer />
+    </Container>
   )
 }
 
