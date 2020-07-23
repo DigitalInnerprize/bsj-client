@@ -4,9 +4,18 @@ import { useBreakpoint } from '../state/breakpoint'
 import { Flex, FlexItem } from './styled/flexBox'
 import { UL, LI } from './styled/list'
 import { P, NavClickLink } from './styled/type'
+import { Twitter, Facebook, StyledIconBase } from '@styled-icons/simple-icons'
+
+const IconStyleWrapper = styled.div`
+  ${StyledIconBase} {
+    color: inherit;
+    width: 30px;
+    /* icon styles go here */
+  }
+`
 
 const Wrapper = styled.footer`
-  height: 10rem;
+  height: 15rem;
   background: ${(props) => props.theme.colors['lightBlue']};
   color: #f8f8fb;
   display: grid;
@@ -25,14 +34,14 @@ const Footer = () => {
           <FlexItem>
             <UL center>
               <LI>
-                <NavClickLink marginBottom="sm2" href="#">
-                  facebook
-                </NavClickLink>
+                <IconStyleWrapper>
+                  <Facebook />
+                </IconStyleWrapper>
               </LI>
               <LI>
-                <NavClickLink marginBottom="sm2" href="#">
-                  instagram
-                </NavClickLink>
+                <IconStyleWrapper>
+                  <Twitter />
+                </IconStyleWrapper>
               </LI>
             </UL>
           </FlexItem>

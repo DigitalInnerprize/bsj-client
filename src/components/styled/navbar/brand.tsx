@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-type Props = {
+interface Props {
   logo: string
   alt?: string
 }
@@ -11,8 +11,7 @@ const defaultProps = {
 }
 
 const Image = styled.img`
-  height: 85%;
-  margin: auto 0;
+  width: inherit;
 `
 
 const Brand: React.FC<Props> = ({ logo, alt }) => <Image src={logo} alt={alt} />

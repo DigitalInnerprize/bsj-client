@@ -23,7 +23,6 @@ export const Container = styled.div<ContainerProps>`
   padding-bottom: ${(props) => props.paddingBottom && props.theme.spacing.vertical[props.paddingBottom]};
   padding-left: ${(props) => props.paddingLeft && props.theme.spacing.horizontal[props.paddingLeft]};
   padding-right: ${(props) => props.paddingRight && props.theme.spacing.horizontal[props.paddingRight]};
-  height: 100%;
   ${is('maxWidth')`
       max-width: ${(props) => props.maxWidth}px;
     `};

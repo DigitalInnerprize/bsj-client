@@ -7,11 +7,12 @@ export const GlobalStyle = createGlobalStyle`
   padding: 0;
   outline: 0;
   vertical-align: baseline;
-  font-size: 100%;
   box-sizing: inherit;
 
   &::before,
   &::after {
+    margin: 0px;
+    padding: 0px;
     box-sizing: inherit;
   }
 }
@@ -20,6 +21,7 @@ html {
   box-sizing: border-box;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
 }
 
 body {

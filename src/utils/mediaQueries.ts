@@ -11,4 +11,5 @@ export const media = {
   desktop: customMediaQuery('min', 922),
   tablet: customMediaQuery('min', 768),
   phone: customMediaQuery('max', 576),
+  maxPhone: customMediaQuery('max', 767),
 }

@@ -12,8 +12,9 @@ import styled from 'styled-components'
 import Navbar from './styled/navbar/navbar.tsx'
 import Footer from './footer.tsx'
 import { GlobalStyle } from './globalStyle'
+import { Container } from './styled/container'
 
-const Container = styled.div`
+const LayoutContainer = styled.div`
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -29,14 +30,23 @@ const Layout = ({ children }) => {
       }
     }
   `)
+  const [open, setOpen] = React.useState(false)
+
+  const handleNavBar = () => {
+    setOpen(!open)
+  }
 
   return (
-    <Container>
+    <LayoutContainer>
       <GlobalStyle />
-      <Navbar siteTitle={data.site.siteMetadata.title} />
-      <main>{children}</main>
+      <Navbar siteTitle={data.site.siteMetadata.title} navBarState={open} handleNavBar={handleNavBar} />
+      <main>
+        <Container maxWidth={1300} marginLeftRightAuto>
+          {children}
+        </Container>
+      </main>
       <Footer />
-    </Container>
+    </LayoutContainer>
   )
 }
 

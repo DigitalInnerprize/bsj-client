@@ -2,14 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 
 type Props = {
-  handleNavbar?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
-  navbarState: boolean
+  handleNavBar?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  navBarState: boolean
 }
 
-const BurgerMenu: React.FC<Props> = ({ handleNavbar, navbarState }: Props) => {
+const Burger: React.FC<Props> = ({ handleNavBar, navBarState }: Props) => {
   return (
-    <Wrapper onClick={handleNavbar}>
-      <div className={navbarState ? 'open' : ''}>
+    <Wrapper onClick={handleNavBar}>
+      <div className={navBarState ? 'open' : ''}>
         <span>&nbsp;</span>
         <span>&nbsp;</span>
         <span>&nbsp;</span>
@@ -18,7 +18,7 @@ const BurgerMenu: React.FC<Props> = ({ handleNavbar, navbarState }: Props) => {
   )
 }
 
-export default BurgerMenu
+export default Burger
 
 const Wrapper = styled.div`
   position: relative;

@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
 type Props = {
-  handleNavbar?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
-  navbarState: boolean
+  handleNavBar?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+  navBarState: boolean
 }
 
-const CollapseMenu: React.FC<Props> = ({ navbarState, handleNavbar }) => {
-  const { open } = useSpring({ open: navbarState ? 0 : 1 })
+const CollapseMenu: React.FC<Props> = ({ navBarState, handleNavBar }) => {
+  const { open } = useSpring({ open: navBarState ? 0 : 1 })
 
-  if (navbarState === true) {
+  if (navBarState === true) {
     return (
       <CollapseWrapper
         style={{
@@ -25,23 +25,13 @@ const CollapseMenu: React.FC<Props> = ({ navbarState, handleNavbar }) => {
       >
         <NavLinks>
           <li>
-            <a href="/" onClick={handleNavbar}>
-              link n1
+            <a href="/" onClick={handleNavBar}>
+              Post a Job
             </a>
           </li>
           <li>
-            <a href="/" onClick={handleNavbar}>
-              link n2
-            </a>
-          </li>
-          <li>
-            <a href="/" onClick={handleNavbar}>
-              link n3
-            </a>
-          </li>
-          <li>
-            <a href="/" onClick={handleNavbar}>
-              link n4
+            <a href="/" onClick={handleNavBar}>
+              View Jobs
             </a>
           </li>
         </NavLinks>
@@ -70,16 +60,16 @@ const NavLinks = styled.ul`
   }
 
   & a {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     line-height: 2;
-    color: #dfe6e9;
+    color: ${({ theme }) => theme.colors.premium};
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
-      color: #fdcb6e;
-      border-bottom: 1px solid #fdcb6e;
+      color: ${({ theme }) => theme.colors.premiumHover};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.premiumHover};
     }
   }
 `

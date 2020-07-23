@@ -3,18 +3,18 @@ import styled from 'styled-components'
 import { useSpring, animated, config } from 'react-spring'
 import { media } from '../../../utils/mediaQueries.ts'
 
-import Brand from './brand'
-import BurgerMenu from './burgerMenu'
-import CollapseMenu from './collapseMenu'
+import Burger from './burger'
+import Menu from './menu'
+import { NavLink } from '../type'
 
 type Props = {
-  handleNavbar?: (
+  handleNavBar?: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => void
-  navbarState: boolean
+  navBarState: boolean
 }
 
-const Navbar: React.FC<Props> = ({ navbarState, handleNavbar }) => {
+const Navbar: React.FC<Props> = ({ navBarState, handleNavBar }) => {
   const barAnimation = useSpring({
     from: { transform: 'translate3d(0, -10rem, 0)' },
     transform: 'translate3d(0, 0, 0)',
@@ -31,19 +31,21 @@ const Navbar: React.FC<Props> = ({ navbarState, handleNavbar }) => {
     <>
       <NavBar style={barAnimation}>
         <FlexContainer>
-          <Brand logo="logo.png" />
+          <StyledDiv style={linkAnimation}>
+            <NavLink size="logo" to="/" color="white">
+              Behind Scene Jobs
+            </NavLink>
+          </StyledDiv>
           <NavLinksUl style={linkAnimation}>
-            <a href="/">link n1</a>
-            <a href="/">link n2</a>
-            <a href="/">link n3</a>
-            <a href="/">link n4</a>
+            <a href="/">Post a Job</a>
+            <a href="/">View Jobs</a>
           </NavLinksUl>
           <BurgerWrapper>
-            <BurgerMenu navbarState={navbarState} handleNavbar={handleNavbar} />
+            <Burger navBarState={navBarState} handleNavBar={handleNavBar} />
           </BurgerWrapper>
         </FlexContainer>
       </NavBar>
-      <CollapseMenu navbarState={navbarState} handleNavbar={handleNavbar} />
+      <Menu navBarState={navBarState} handleNavBar={handleNavBar} />
     </>
   )
 }
@@ -51,47 +53,53 @@ const Navbar: React.FC<Props> = ({ navbarState, handleNavbar }) => {
 export default Navbar
 
 const NavBar = styled(animated.nav)`
-  width: 100%;
-  background: #2d3436;
+  background: ${(props) => props.theme.colors['lightBlue']};
   z-index: 1;
-  font-size: 1.4rem;
 `
 
 const FlexContainer = styled.div`
-  max-width: 120rem;
+  max-width: 130rem;
   display: flex;
-  margin: auto;
-  padding: 0 2rem;
+  margin: 0 auto;
   justify-content: space-between;
-  height: 5rem;
+  align-items: center;
+  height: 6.5rem;
 `
 
+const StyledDiv = styled(animated.div)``
+
 const NavLinksUl = styled(animated.ul)`
-  justify-self: end;
-  list-style-type: none;
-  margin: auto 0;
+  display: none;
 
-  & a {
-    color: #dfe6e9;
-    text-transform: uppercase;
-    font-weight: 600;
-    border-bottom: 1px solid transparent;
-    margin: 0 1.5rem;
-    transition: all 300ms linear 0s;
-    text-decoration: none;
-    cursor: pointer;
+  ${media.tablet} {
+    display: flex;
+    list-style-type: none;
 
-    &:hover {
-      color: #fdcb6e;
-      border-bottom: 1px solid #fdcb6e;
+    & a {
+      font-size: 1.6rem;
+      color: ${({ theme }) => theme.colors.white};
+      text-transform: uppercase;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      margin: 0 1.5rem;
+      transition: all 300ms linear 0s;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: ${({ theme }) => theme.colors.white};
+        border-bottom: 1px solid ${({ theme }) => theme.colors.premiumHover};
+      }
     }
   }
 `
 
 const BurgerWrapper = styled.div`
-  margin: auto 0;
+  display: none;
 
-  ${media.custom('min', 769)} {
-    display: none;
+  ${media.maxPhone} {
+    display: block;
+    flex-direction: column;
+    margin: auto 0;
   }
 `
