@@ -15,7 +15,7 @@ const IconStyleWrapper = styled.div`
 `
 
 const Wrapper = styled.footer`
-  height: 15rem;
+  height: 10rem;
   background: ${(props) => props.theme.colors['lightBlue']};
   color: #f8f8fb;
   display: grid;

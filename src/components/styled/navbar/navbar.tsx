@@ -32,7 +32,7 @@ const Navbar: React.FC<Props> = ({ navBarState, handleNavBar }) => {
       <NavBar style={barAnimation}>
         <FlexContainer>
           <StyledDiv style={linkAnimation}>
-            <NavLink size="logo" to="/" color="white">
+            <NavLink marginTop="0" marginBottom="0" size="logo" to="/" color="white">
               Behind Scene Jobs
             </NavLink>
           </StyledDiv>

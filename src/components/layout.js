@@ -12,7 +12,8 @@ import styled from 'styled-components'
 import Navbar from './styled/navbar/navbar.tsx'
 import Footer from './footer.tsx'
 import { GlobalStyle } from './globalStyle'
-import { Container } from './styled/container'
+import { Container, ContentContainer } from './styled/container'
+import { Ad } from './ad'
 
 const LayoutContainer = styled.div`
   height: 100vh;
@@ -41,9 +42,11 @@ const Layout = ({ children }) => {
       <GlobalStyle />
       <Navbar siteTitle={data.site.siteMetadata.title} navBarState={open} handleNavBar={handleNavBar} />
       <main>
-        <Container maxWidth={1300} marginLeftRightAuto>
+        <ContentContainer>
+          <Ad />
           {children}
-        </Container>
+          <Ad />
+        </ContentContainer>
       </main>
       <Footer />
     </LayoutContainer>

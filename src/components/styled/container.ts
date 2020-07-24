@@ -52,3 +52,10 @@ export const FlexRowVAlign = styled.div`
   justify-content: space-between;
   align-items: center;
 `
+
+export const ContentContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  height: 100%;
+  grid-gap: 20px;
+`
