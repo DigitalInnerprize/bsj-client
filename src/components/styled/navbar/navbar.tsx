@@ -32,7 +32,7 @@ const Navbar: React.FC<Props> = ({ navBarState, handleNavBar }) => {
       <NavBar style={barAnimation}>
         <FlexContainer>
           <StyledDiv style={linkAnimation}>
-            <NavLink marginTop="0" marginBottom="0" size="logo" to="/" color="white">
+            <NavLink marginTop="0" marginBottom="0" size="logo" to="/" themeColor="white">
               Behind Scene Jobs
             </NavLink>
           </StyledDiv>
@@ -53,7 +53,7 @@ const Navbar: React.FC<Props> = ({ navBarState, handleNavBar }) => {
 export default Navbar
 
 const NavBar = styled(animated.nav)`
-  background: ${(props) => props.theme.colors['lightBlue']};
+  background: ${(props) => props.theme.colors['darkSlateGray']};
   z-index: 1;
 `
 
@@ -77,7 +77,6 @@ const NavLinksUl = styled(animated.ul)`
 
     & a {
       font-size: 1.6rem;
-      color: ${({ theme }) => theme.colors.white};
       text-transform: uppercase;
       font-weight: 600;
       border-bottom: 1px solid transparent;

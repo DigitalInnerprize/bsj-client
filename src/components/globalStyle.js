@@ -33,6 +33,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  color: ${({ theme }) => theme.colors['iceWhite']};
+  background: ${({ theme }) => theme.colors['midnightBlue']};
 }
 
 img {

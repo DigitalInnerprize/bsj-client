@@ -11,6 +11,7 @@ const theme = {
     xxl: 1900,
   },
   colors: {
+    darkSlateGray: '#1f364d',
     gray2: '#787878',
     gray4: '#4a4a4a',
     gray7: '#76797e',
@@ -21,6 +22,8 @@ const theme = {
     grayFadeAltLightest: '#f2f2f2',
     grayb: '#bdccd6',
     graybAlt: '#b3b3b9',
+    iceWhite: '#9cb3c9',
+    midnightBlue: '#0e2438',
     premium: '#376afb',
     premiumHover: '#2c55c7',
     primary: '#0033a0',

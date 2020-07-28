@@ -14,6 +14,7 @@ type SharedProps = {
   capitalize?: boolean
   fontWeight?: string | number
   color?: string
+  themeColor?: string
   size?: string
 }
 
@@ -60,7 +61,8 @@ export const Heading = styled.h1<HeadingProps>`
   margin-bottom: ${(props) =>
     props.marginBottom ? props.theme.spacing.vertical[props.marginBottom] : props.theme.spacing.vertical.lg};
   font-family: ${(props) => props.theme.type.family.heading};
-  color: ${(props) => (props.color ? props.theme.colors[props.color] : props.theme.colors.black)};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   line-height: ${(props) =>
     props.lineHeight ? props.theme.type.lineHeight[props.lineHeight] : props.theme.type.lineHeight.regular};
@@ -96,7 +98,8 @@ export const AnimationH1 = styled(animated.h1)<HeadingProps>`
   margin-bottom: ${(props) =>
     props.marginBottom ? props.theme.spacing.vertical[props.marginBottom] : props.theme.spacing.vertical.lg};
   font-family: ${(props) => props.theme.type.family.heading};
-  color: ${(props) => (props.color ? props.theme.colors[props.color] : props.theme.colors.black)};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   line-height: ${(props) =>
     props.lineHeight ? props.theme.type.lineHeight[props.lineHeight] : props.theme.type.lineHeight.regular};
@@ -120,7 +123,8 @@ export const AnimationH2 = styled(animated.h2)<HeadingProps>`
   margin-bottom: ${(props) =>
     props.marginBottom ? props.theme.spacing.vertical[props.marginBottom] : props.theme.spacing.vertical.lg};
   font-family: ${(props) => props.theme.type.family.heading};
-  color: ${(props) => (props.color ? props.theme.colors[props.color] : props.theme.colors.black)};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : 'normal')};
   line-height: ${(props) =>
     props.lineHeight ? props.theme.type.lineHeight[props.lineHeight] : props.theme.type.lineHeight.regular};
@@ -141,7 +145,6 @@ export const AnimatedH1 = (props: HeadingProps) => (
   <AnimationH1
     {...props}
     children={props.children}
-    color={props.color ? props.color : 'black'}
     fontWeight={props.fontWeight ? props.fontWeight : 500}
     letterSpacing="narrow"
     lineHeight="compressedAlt"
@@ -153,7 +156,6 @@ export const AnimatedH2 = (props: HeadingProps) => (
   <AnimationH2
     {...props}
     children={props.children}
-    color={props.color ? props.color : 'black'}
     fontWeight={props.fontWeight ? props.fontWeight : 500}
     letterSpacing="narrow"
     lineHeight="compressedAlt"
@@ -166,7 +168,6 @@ export const H1 = (props: HeadingProps) => (
     {...props}
     as="h1"
     children={props.children}
-    color={props.color ? props.color : 'black'}
     fontWeight={props.fontWeight ? props.fontWeight : 500}
     letterSpacing={props.letterSpacing ? props.letterSpacing : 'narrow'}
     lineHeight={props.lineHeight ? props.lineHeight : 'compressedAlt'}
@@ -179,7 +180,6 @@ export const H2 = (props: HeadingProps) => (
     {...props}
     as="h2"
     children={props.children}
-    color={props.color ? props.color : 'black'}
     fontWeight={props.fontWeight ? props.fontWeight : 500}
     letterSpacing={props.letterSpacing ? props.letterSpacing : 'narrow'}
     marginBottom={props.marginBottom ? props.marginBottom : 'sm2'}
@@ -239,7 +239,8 @@ export const P = styled.p<PtagProps>`
   padding-right: ${(props) => (props.paddingRight ? props.theme.spacing.horizontal[props.paddingRight] : 0)};
   margin-left: ${(props) => props.centered && 'auto'};
   margin-right: ${(props) => props.centered && 'auto'};
-  color: ${(props) => props.color && props.theme.colors[props.color]};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   font-weight: ${(props) => props.fontWeight && props.fontWeight};
   text-align: ${(props) => props.centered && 'center'};
   border-left: ${(props) => props.borderLeft && `3px solid ${props.theme.colors.black}`};
@@ -282,7 +283,8 @@ export const AnimatedP = styled(animated.p)<PtagProps>`
   padding-left: ${(props) =>
     props.paddingLeft ? props.theme.spacing.horizontal[props.paddingLeft] : props.borderLeft ? '10px' : 0};
   padding-right: ${(props) => (props.paddingRight ? props.theme.spacing.horizontal[props.paddingRight] : 0)};
-  color: ${(props) => props.color && props.theme.colors[props.color]};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   ${(props) =>
     fontSizer(
       props.size ? props.theme.type.size[props.size] : props.theme.type.size.bodyAlt,
@@ -294,7 +296,8 @@ export const AnimatedP = styled(animated.p)<PtagProps>`
 export const SmallText = styled.span<TextProps>`
   max-width: 80%;
   margin: 0 0 ${(props) => props.theme.spacing.vertical.md};
-  color: ${(props) => props.color && props.theme.colors[props.color]};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   letter-spacing: ${(props) => props.theme.type.letterSpacing.regular};
   font-family: ${(props) => props.theme.type.family.heading};
   line-height: ${(props) => props.theme.type.lineHeight.extended};
@@ -335,8 +338,11 @@ export const NavLink = styled(Link)<NavLinkProps>`
   margin-left: ${(props) => props.marginLeft && props.theme.spacing.horizontal[props.marginLeft]};
   margin-right: ${(props) => props.marginRight && props.theme.spacing.horizontal[props.marginRight]};
   display: ${(props) => (props.display ? props.display : 'block')};
+  cursor: pointer;
   font-family: ${(props) => props.theme.type.family.heading};
   font-weight: ${(props) => props.fontWeight && props.fontWeight};
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   ${(props) =>
     fontSizer(
       props.size ? props.theme.type.size[props.size] : props.theme.type.size.body,
@@ -375,6 +381,8 @@ export const NavClickLink = styled.a<NavLinkProps>`
   font-family: ${(props) => props.theme.type.family.heading};
   font-weight: ${(props) => props.fontWeight && props.fontWeight};
   cursor: pointer;
+  color: ${(props) =>
+    props.themeColor ? props.theme.colors[props.themeColor] : props.color ? props.color : 'inherit'};
   ${(props) =>
     fontSizer(
       props.size ? props.theme.type.size[props.size] : props.theme.type.size.body,
